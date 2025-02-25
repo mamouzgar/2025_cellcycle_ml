@@ -1,7 +1,7 @@
 ## 2025_feb_25
 ## author: amouzgar@stanford.edu
 ## Nature Communications review: please do not distribute
-for (i in (c("tidyverse", "pROC","nnet","caret",'patchwork',"rstudioapi"))){ 
+for (i in (c("tidyverse", "pROC","nnet","caret",'patchwork',"rstudioapi","magrittr"))){ 
   # message(packageVersion(i))
   message(paste(i,packageVersion(i)))
   
