@@ -7,4 +7,5 @@ pROC 1.18.5
 nnet 7.3.19
 caret 7.0.1
 patchwork 1.3.0
-rstudioapi 0.17.1
+rstudioapi 0.17.
+magrittr 2.0.3
