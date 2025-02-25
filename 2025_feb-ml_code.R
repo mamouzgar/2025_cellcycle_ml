@@ -183,7 +183,7 @@ p3 = ggplot(my_var_explained, aes(x= var_expl, y = reorder(feature, var_expl))) 
   theme_bw()+
   theme(text = element_text(size = 6,family = 'sans')) +
   geom_col()
-
+## plot results, expected to be a little different from original manuscript due to much smaller data sample size but general trends are the same
 patchwork::wrap_plots(p1,p2,p3)
 
 
