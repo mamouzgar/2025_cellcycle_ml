@@ -1,7 +1,12 @@
 ## 2025_feb_25
 ## author: amouzgar@stanford.edu
 ## Nature Communications review: please do not distribute
-
+for (i in (c("tidyverse", "pROC","nnet","caret",'patchwork',"rstudioapi"))){ 
+  # message(packageVersion(i))
+  message(paste(i,packageVersion(i)))
+  
+  }
+          
 list.of.packages <- c("tidyverse", "pROC","nnet","caret",'patchwork',"rstudioapi")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -26,7 +31,7 @@ features_cellcycle_minimal = features_cellcycle %>% .[!. %in% c('IdU','DNA')]
 
 ## read example data
 filepath=dirname(rstudioapi::getSourceEditorContext()$path)
-cell_line_df =read.csv(paste0(output_ml, '/2025_feb-example_data.csv'),sep=',')
+cell_line_df =read.csv(paste0(filepath, '/2025_feb-example_data.csv'),sep=',')
 
 ####################################################
 ## function to extract ROC curve infomration 
@@ -73,14 +78,6 @@ head(trainSet_scaled)
 head(testSet_scaled)
 
 
-trainSet_scaled =  CELL_LINE_TRAJECTORY_INFERENCE_df%>%
-  ungroup() %>%
-  mutate_at(features_cellcycle_curated, scale) %>%
-  dplyr::filter(cell.id %in% train_ids)
-testSet_scaled = CELL_LINE_TRAJECTORY_INFERENCE_df%>%
-  ungroup() %>%
-  mutate_at(features_cellcycle_curated, scale) %>%
-  dplyr::filter(!cell.id %in% train_ids)
 ## FULL feature set
 multinom_res = nnet::multinom(formula =  as.formula(paste0('cell_line~0+',paste(features_cellcycle_curated, collapse ='+'))), data = trainSet_scaled)
 predict_res_probs = predict(multinom_res, testSet_scaled,type = 'probs')
@@ -183,6 +180,7 @@ p3 = ggplot(my_var_explained, aes(x= var_expl, y = reorder(feature, var_expl))) 
   theme_bw()+
   theme(text = element_text(size = 6,family = 'sans')) +
   geom_col()
+
 ## plot results, expected to be a little different from original manuscript due to much smaller data sample size but general trends are the same
 patchwork::wrap_plots(p1,p2,p3)
 
