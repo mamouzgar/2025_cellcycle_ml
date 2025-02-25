@@ -17,6 +17,7 @@ Demo:
 Expected final output are the plots used in the figure with general trends similar to the primary manuscript. Minor differences are expected due to downsampling.
 
 Instructions for use:
-Simply download the data and script into the same directory and run the script. Code will run directly on the data provided in this github rep. Can be easily reproduced using other data by just changing the feature variables, class label (cell_line in this case), and input data.
+Simply download the data and script into the same directory and run the script. Code will run directly on the data provided in this github repo. Can be easily reproduced using other data by just changing the feature variables, class label (cell_line in this case), and input data.
+
 
 
