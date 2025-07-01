@@ -284,6 +284,7 @@ umap_df = data.frame(umap_res) %>% ## extract coordinates
 ggplot(umap_df, aes(x=X1, y=X2, color = cell_line))+
   geom_point()
 
+
 ############################################################################################
 ## (6) Raw code to run single-cell perturbation scores (requires Reticulate) ##
 ############################################################################################
@@ -295,7 +296,21 @@ reticulate::use_condaenv(condaenv = 'meld') ## note: must setup your environment
 ## we normalize and downsample the data
 meld_input = cell_line_df %>% ungroup()%>% mutate_at(all_of(features_cellcycle), dynutils::scale_minmax) %>%  group_by(cell_line) %>%sample_n(1000) %>% ungroup()
 
-meld_score = trajiq:::calculate_likelihood_score(meld_input %>% dplyr::select(all_of(features_cellcycle)),labels =  meld_input$cell_line )
+## this function uses reticulate to calculate meld via python. 
+## you must configure your environment yourself for this to work.
+## please see the original manuscript for installation. Burkhardt et al. 2021
+calculate_meld = function (df_features_only, labels) {
+  meld_likelihood_score <- reticulate::import("meld")
+  np <- reticulate::import("numpy")
+  pd <- reticulate::import("pandas")
+  pd_df = pd$pandas$DataFrame(df_features_only)
+  sample_densities = meld_likelihood_score$meld$MELD()$fit_transform(X = pd_df, 
+                                                                     sample_labels = np$array(labels))
+  sample_likelihoods = meld_likelihood_score$meld$utils$normalize_densities(sample_densities)
+  return(sample_likelihoods)
+}
+
+meld_score = calculate_meld(meld_input %>% dplyr::select(all_of(features_cellcycle)),labels =  meld_input$cell_line )
 
 ## bind the meld scores to your data
 meld_output =meld_input %>%
@@ -303,6 +318,8 @@ meld_output =meld_input %>%
 
 ## calculate and plot correlations between cell line scores
 pheatmap::pheatmap(cor(meld_score))
+
+
 
 
 
