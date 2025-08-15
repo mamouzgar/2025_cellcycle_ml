@@ -6,6 +6,18 @@ MELD is a python package with installation instruction available at https://gith
 Reticulate and conda can be used to run MELD in R. Information on installing reticulate can be found at https://rstudio.github.io/reticulate/ and conda at https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html 
 After correct installations, Reticulate in R can be used to load the newly created conda environment and run python packages like MELD directly through R. 
 
+```
+meld_using_reticulate_example_starter_function = function(df_features_only, labels_vector){
+     meld_likelihood_score <- reticulate::import("meld")
+     np <- reticulate::import("numpy")
+     pd <- reticulate::import("pandas")
+     pd_df = pd$pandas$DataFrame(df_features_only)
+     sample_densities = meld_likelihood_score$meld$MELD()$fit_transform(X = pd_df, 
+     sample_labels = np$array(labels_vector))
+     sample_likelihoods = meld_likelihood_score$meld$utils$normalize_densities(sample_densities)
+     return(sample_likelihoods)
+)
+```
 
 System requirements:
 tidyverse 2.0.0
