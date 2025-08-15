@@ -1,6 +1,12 @@
 # 2025_cellcycle_ml
 Example code with test data for running ML algorithms of "A deep single cell mass cytometry approach to capture canonical and noncanonical cell cycle states". 
 
+
+MELD is a python package with installation instruction available at https://github.com/KrishnaswamyLab/MELD
+Reticulate and conda can be used to run MELD in R. Information on installing reticulate can be found at https://rstudio.github.io/reticulate/ and conda at https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html 
+After correct installations, Reticulate in R can be used to load the newly created conda environment and run python packages like MELD directly through R. 
+
+
 System requirements:
 tidyverse 2.0.0
 pROC 1.18.5
