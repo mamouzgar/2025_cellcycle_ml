@@ -11,6 +11,9 @@ After users have correctly installed the software, we have also provided an exam
 
 
 ```
+## This function takes in two arguements:
+## df_features_only=a dataframe of cells(rows) x features(columns)
+## labels_vector: a vector containing the relevant perturbation/experimental columns of interest with indexes in a matching order of the cell ordering in the dataframe. eg, labels_vector = c('NoTx','NoTx','tx','tx','NoTx',...) 
 meld_using_reticulate_example_starter_function = function(df_features_only, labels_vector){
      meld_likelihood_score <- reticulate::import("meld")
      np <- reticulate::import("numpy")
